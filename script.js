@@ -1,3 +1,7 @@
+/* 
+* Function that makes the computer play
+* @return {string} random string from rockPaperScissors array
+*/
 function computerPlay() {
     let rockPaperScissors = ['Rock', 'Paper', 'Scissors'];
    
@@ -7,6 +11,12 @@ function computerPlay() {
     return randomSelection;
 }
 
+/* 
+* Function to play a single round of Rock Paper Scissors
+* @param {string} playerSelection selection made by the player
+* @param {string} computerSelection value returned by computerPlay() function
+* @return {string} string that declares the winner of the round
+*/
 function playRound(playerSelection, computerSelection) {
     playerSelection = playerSelection.toLowerCase();
     
@@ -25,7 +35,11 @@ function playRound(playerSelection, computerSelection) {
 
 }
 
-/* Capitalizes first letter of the player's selection to display in winning message */
+/* 
+* Function that capitalizes the first letter of the player's selection to display in winning message
+* @params {string} selection made by the player
+* @returns {string} string with the first letter capitalized
+*/
 function capitalize(selection) {
     let firstChar = selection[0].toUpperCase();
     let remainingString = selection.slice(1);
