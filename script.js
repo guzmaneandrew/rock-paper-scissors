@@ -1,3 +1,32 @@
+let container = document.getElementById('container');
+
+//Buttons for each selection
+let rock = document.createElement('button');
+let rockSelection = rock.textContent = 'Rock';
+rock.addEventListener('click', () => {
+    playRound(rockSelection, getComputerChoice());
+});
+container.append(rock);
+
+let paper = document.createElement('button');
+let paperSelection = paper.textContent = 'Paper';
+paper.addEventListener('click', () => {
+    playRound(paperSelection, getComputerChoice());
+});
+container.appendChild(paper);
+
+let scissors = document.createElement('button');
+let scissorsSelection = scissors.textContent = 'Scissors';
+scissors.addEventListener('click', () => {     
+    playRound(scissorsSelection, getComputerChoice());
+});
+container.appendChild(scissors);
+
+//Displaying results
+let results = document.createElement('div');
+results.className = 'results';
+container.appendChild(results);
+
 /* 
 * Function that makes the computer play
 * @return {string} random string from rockPaperScissors array
@@ -23,20 +52,23 @@ function playRound(playerSelection, computerSelection) {
     if ((playerSelection === 'scissors' && computerSelection === 'Rock') || 
         (playerSelection === 'rock' && computerSelection === 'Paper') || 
         (playerSelection === 'paper' && computerSelection === 'Scissors')) {
-            //return `You lose! ${computerSelection} beats ${capitalize(playerSelection)}`;
-            return -1;
+            console.log(`YOU WIN! Computer: ${computerSelection} | You: ${capitalize(playerSelection)}`);
+            results.textContent = `You lose! ${computerSelection} beats ${capitalize(playerSelection)}`;
+            //return -1;
         } else if (
             (playerSelection === 'rock' && computerSelection === 'Scissors') || 
             (playerSelection === 'paper' && computerSelection === 'Rock') || 
             (playerSelection === 'scissors' && computerSelection === 'Paper')) {
-            //return `You win! ${capitalize(playerSelection)} beats ${computerSelection}`;
-            return 1;
+            console.log(`YOU LOSE! Computer: ${computerSelection} | You: ${capitalize(playerSelection)}`);
+            results.textContent = `You win! ${capitalize(playerSelection)} beats ${computerSelection}`;
+            //return 1;
         } else if (
             (playerSelection === 'scissors' && computerSelection === 'Scissors') || 
             (playerSelection === 'rock' && computerSelection === 'Rock') || 
             (playerSelection === 'paper' && computerSelection === 'Paper')) {
-            //return `Tie!`;
-            return 0;
+            console.log(`TIE! Computer: ${computerSelection} | You: ${capitalize(playerSelection)}`);
+            results.textContent = `Tie!`;
+            //return 0;
         }
 
 }
@@ -46,29 +78,29 @@ function playRound(playerSelection, computerSelection) {
 * @params none
 * @returns {string} string indicating winner of the game
 */
-function game() {
-    let userScore = 0;
-    let computerScore = 0;
-    for(let i = 0; i < 5; i++) {
-        let userSelection = prompt("Rock, paper, or scissors?");
-        let computerSelection = getComputerChoice();
-        let result = playRound(userSelection, computerSelection);
+// function game() {
+//     let userScore = 0;
+//     let computerScore = 0;
+//     for(let i = 0; i < 5; i++) {
+//         let userSelection = prompt("Rock, paper, or scissors?");
+//         let computerSelection = getComputerChoice();
+//         let result = playRound(userSelection, computerSelection);
 
-        if(result === 1) {
-            userScore++;
-        } else if(result === -1) {
-            computerScore++;
-        }
-    }
+//         if(result === 1) {
+//             userScore++;
+//         } else if(result === -1) {
+//             computerScore++;
+//         }
+//     }
     
-    if(userScore > computerScore) {
-        return `You won the game!`;
-    } else if (userScore < computerScore) {
-        return `You lost the game!`;
-    } else {
-        return `No winners, it's a tie!`;
-    }
-}
+//     if(userScore > computerScore) {
+//         return `You won the game!`;
+//     } else if (userScore < computerScore) {
+//         return `You lost the game!`;
+//     } else {
+//         return `No winners, it's a tie!`;
+//     }
+// }
 
 /* 
 * Function that capitalizes the first letter of the player's selection to display in winning message
@@ -81,4 +113,4 @@ function capitalize(selection) {
     return firstChar + remainingString;
 }
 
-game();
+// game();
