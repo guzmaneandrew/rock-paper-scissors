@@ -1,31 +1,43 @@
-let container = document.getElementById('container');
+let btnContainer = document.querySelector('.btnContainer');
+let results = document.querySelector('.results');
 
 //Buttons for each selection
 let rock = document.createElement('button');
-let rockSelection = rock.textContent = 'Rock';
-rock.addEventListener('click', () => {
-    playRound(rockSelection, getComputerChoice());
-});
-container.append(rock);
-
 let paper = document.createElement('button');
-let paperSelection = paper.textContent = 'Paper';
-paper.addEventListener('click', () => {
-    playRound(paperSelection, getComputerChoice());
-});
-container.appendChild(paper);
-
 let scissors = document.createElement('button');
-let scissorsSelection = scissors.textContent = 'Scissors';
-scissors.addEventListener('click', () => {     
-    playRound(scissorsSelection, getComputerChoice());
-});
-container.appendChild(scissors);
 
-//Displaying results
-let results = document.createElement('div');
-results.className = 'results';
-container.appendChild(results);
+//Modify buttons
+let rockSelection = rock.textContent = 'Rock';
+let paperSelection = paper.textContent = 'Paper';
+let scissorsSelection = scissors.textContent = 'Scissors';
+
+//Add buttons to the DOM
+btnContainer.appendChild(rock);
+btnContainer.appendChild(paper);
+btnContainer.appendChild(scissors);
+
+let userSelection;
+let result;
+
+//Button click event listeners
+rock.addEventListener('click', () => {
+    userSelection = rockSelection;
+    result = playRound(userSelection, getComputerChoice());
+    console.log(result);
+});
+
+paper.addEventListener('click', () => {
+    userSelection = paperSelection;
+    result = playRound(userSelection, getComputerChoice());
+    console.log(result);
+});
+
+scissors.addEventListener('click', () => {   
+    userSelection = scissorsSelection;
+    result = playRound(userSelection, getComputerChoice());
+    console.log(result);
+
+});
 
 /* 
 * Function that makes the computer play
@@ -44,31 +56,29 @@ function getComputerChoice() {
 * Function to play a single round of Rock Paper Scissors
 * @param {string} playerSelection selection made by the player
 * @param {string} computerSelection value returned by computerPlay() function
-* @return {string} string that declares the winner of the round
+* @return {number} number indicating whether user earned/lost/tied in a round
 */
-function playRound(playerSelection, computerSelection) {
-    playerSelection = playerSelection.toLowerCase();
-    
-    if ((playerSelection === 'scissors' && computerSelection === 'Rock') || 
-        (playerSelection === 'rock' && computerSelection === 'Paper') || 
-        (playerSelection === 'paper' && computerSelection === 'Scissors')) {
-            console.log(`YOU WIN! Computer: ${computerSelection} | You: ${capitalize(playerSelection)}`);
-            results.textContent = `You lose! ${computerSelection} beats ${capitalize(playerSelection)}`;
-            //return -1;
+function playRound(playerSelection, computerSelection) {    
+    if ((playerSelection === 'Scissors' && computerSelection === 'Rock') || 
+        (playerSelection === 'Rock' && computerSelection === 'Paper') || 
+        (playerSelection === 'Paper' && computerSelection === 'Scissors')) {
+            console.log(`YOU LOSE! Computer: ${computerSelection} | You: ${playerSelection}`);
+            results.textContent = `You lose! ${computerSelection} beats ${playerSelection}`;
+            return -1;
         } else if (
-            (playerSelection === 'rock' && computerSelection === 'Scissors') || 
-            (playerSelection === 'paper' && computerSelection === 'Rock') || 
-            (playerSelection === 'scissors' && computerSelection === 'Paper')) {
-            console.log(`YOU LOSE! Computer: ${computerSelection} | You: ${capitalize(playerSelection)}`);
-            results.textContent = `You win! ${capitalize(playerSelection)} beats ${computerSelection}`;
-            //return 1;
+            (playerSelection === 'Rock' && computerSelection === 'Scissors') || 
+            (playerSelection === 'Paper' && computerSelection === 'Rock') || 
+            (playerSelection === 'Scissors' && computerSelection === 'Paper')) {
+            console.log(`YOU WIN! Computer: ${computerSelection} | You: ${playerSelection}`);
+            results.textContent = `You win! ${playerSelection} beats ${computerSelection}`;
+            return 1;
         } else if (
-            (playerSelection === 'scissors' && computerSelection === 'Scissors') || 
-            (playerSelection === 'rock' && computerSelection === 'Rock') || 
-            (playerSelection === 'paper' && computerSelection === 'Paper')) {
-            console.log(`TIE! Computer: ${computerSelection} | You: ${capitalize(playerSelection)}`);
+            (playerSelection === 'Scissors' && computerSelection === 'Scissors') || 
+            (playerSelection === 'Rock' && computerSelection === 'Rock') || 
+            (playerSelection === 'Paper' && computerSelection === 'Paper')) {
+            console.log(`TIE! Computer: ${computerSelection} | You: ${playerSelection}`);
             results.textContent = `Tie!`;
-            //return 0;
+            return 0;
         }
 
 }
@@ -82,7 +92,6 @@ function playRound(playerSelection, computerSelection) {
 //     let userScore = 0;
 //     let computerScore = 0;
 //     for(let i = 0; i < 5; i++) {
-//         let userSelection = prompt("Rock, paper, or scissors?");
 //         let computerSelection = getComputerChoice();
 //         let result = playRound(userSelection, computerSelection);
 
@@ -102,15 +111,4 @@ function playRound(playerSelection, computerSelection) {
 //     }
 // }
 
-/* 
-* Function that capitalizes the first letter of the player's selection to display in winning message
-* @params {string} selection made by the player
-* @returns {string} string with the first letter capitalized
-*/
-function capitalize(selection) {
-    let firstChar = selection[0].toUpperCase();
-    let remainingString = selection.slice(1).toLowerCase();
-    return firstChar + remainingString;
-}
-
-// game();
+//  game();
