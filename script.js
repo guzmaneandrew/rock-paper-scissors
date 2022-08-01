@@ -1,8 +1,6 @@
 let btnContainer = document.querySelector('.btnContainer');
 let results = document.querySelector('.results');
-
-let userSelection;
-let result;
+let winningAnnouncement = document.querySelector('.winner');
 
 let userScore = 0;
 let computerScore = 0;
@@ -12,35 +10,33 @@ userScoreDisplay.textContent = userScore;
 computerScoreDisplay = document.querySelector('.computerScore');
 computerScoreDisplay.textContent = computerScore;
 
-//Buttons and event listeners
 let rock = document.createElement('button');
 rock.textContent = 'Rock';
-rock.addEventListener('click', event => {
-    userSelection = event.target.innerText;
-    result = playRound(userSelection, getComputerChoice());
-    game(result);
-});
+btnContainer.appendChild(rock);
 
 let paper = document.createElement('button');
 paper.textContent = 'Paper';
-paper.addEventListener('click', event => {
-    userSelection = event.target.innerText;
-    result = playRound(userSelection, getComputerChoice());
-    game(result);
-});
+btnContainer.appendChild(paper);
 
 let scissors = document.createElement('button');
 scissors.textContent = 'Scissors';
-scissors.addEventListener('click', event => {   
+btnContainer.appendChild(scissors);
+
+let btns = document.querySelectorAll('button');
+
+let userSelection;
+let result;
+
+//Buttons and event listeners
+btns.forEach(btn => {
+    btn.addEventListener('click', abc);
+});
+
+function abc() {
     userSelection = event.target.innerText;
     result = playRound(userSelection, getComputerChoice());
     game(result);
-});
-
-//Add buttons to the DOM
-btnContainer.appendChild(rock);
-btnContainer.appendChild(paper);
-btnContainer.appendChild(scissors);
+}
 
 /* 
 * Function that makes the computer play
@@ -99,16 +95,26 @@ function game(roundResult) {
             computerScoreDisplay.textContent = computerScore;
         }
 
-        console.log(userScore, computerScore);
-
     }
     
     if(userScore >= 5) {
-        results.textContent = 'You won the game!';
-        results.style.color = 'green';
-
+        annouceWinner('You won!', 'green');
+        
     } else if(computerScore >= 5) { 
-        results.textContent = 'You lost the game!';
-        results.style.color = 'red';
+        annouceWinner('Computer won!', 'red')
     }
+
+}
+
+function annouceWinner(string, color) {
+    setTimeout(() => {
+        results.textContent = '';
+    }, 3000);
+
+    winningAnnouncement.textContent = string;
+    winningAnnouncement.style.color = color;
+    btns.forEach(btn => {
+        btn.removeEventListener('click', abc)
+    });
+
 }
