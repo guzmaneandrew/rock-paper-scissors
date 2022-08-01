@@ -1,3 +1,4 @@
+let container = document.querySelector('.container');
 let btnContainer = document.querySelector('.btnContainer');
 let results = document.querySelector('.results');
 let winningAnnouncement = document.querySelector('.winner');
@@ -24,15 +25,15 @@ btnContainer.appendChild(scissors);
 
 let btns = document.querySelectorAll('button');
 
+//Button event listeners
+btns.forEach(btn => {
+    btn.addEventListener('click', listener);
+});
+
 let userSelection;
 let result;
 
-//Buttons and event listeners
-btns.forEach(btn => {
-    btn.addEventListener('click', abc);
-});
-
-function abc() {
+function listener() {
     userSelection = event.target.innerText;
     result = playRound(userSelection, getComputerChoice());
     game(result);
@@ -61,19 +62,19 @@ function playRound(userSelection, computerSelection) {
     if ((userSelection === 'Scissors' && computerSelection === 'Rock') || 
         (userSelection === 'Rock' && computerSelection === 'Paper') || 
         (userSelection === 'Paper' && computerSelection === 'Scissors')) {
-            results.textContent = `You lose! ${computerSelection} beats ${userSelection}`;
+            results.textContent = `You lost this round! ${computerSelection} beats ${userSelection}`;
             return -1;
         } else if (
             (userSelection === 'Rock' && computerSelection === 'Scissors') || 
             (userSelection === 'Paper' && computerSelection === 'Rock') || 
             (userSelection === 'Scissors' && computerSelection === 'Paper')) {
-            results.textContent = `You win! ${userSelection} beats ${computerSelection}`;
+            results.textContent = `You won this round! ${userSelection} beats ${computerSelection}`;
             return 1;
         } else if (
             (userSelection === 'Scissors' && computerSelection === 'Scissors') || 
             (userSelection === 'Rock' && computerSelection === 'Rock') || 
             (userSelection === 'Paper' && computerSelection === 'Paper')) {
-            results.textContent = `Tie!`;
+            results.textContent = `This round is a tie!`;
             return 0;
         }
 
@@ -107,14 +108,23 @@ function game(roundResult) {
 }
 
 function annouceWinner(string, color) {
+    //Display results for the last round of the game for 2 seconds
     setTimeout(() => {
         results.textContent = '';
-    }, 3000);
+    }, 2000);
 
     winningAnnouncement.textContent = string;
     winningAnnouncement.style.color = color;
     btns.forEach(btn => {
-        btn.removeEventListener('click', abc)
+        btn.removeEventListener('click', listener)
+    });
+
+    let newGameBtn = document.createElement('button');
+    newGameBtn.className = 'newGameBtn'
+    newGameBtn.textContent = 'New Game';
+    container.appendChild(newGameBtn);
+    newGameBtn.addEventListener('click', () => {
+        location.reload();
     });
 
 }

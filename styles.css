@@ -39,3 +39,9 @@ button:active {
   box-shadow: 10px 2px 5px black;
   transform: translateY(4px) translateX(4px);
 }
+
+.newGameBtn {
+  font-size: 20px;
+  width: auto;
+  height: auto;
+}
