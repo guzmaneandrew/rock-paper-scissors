@@ -4,12 +4,21 @@ let results = document.querySelector('.results');
 let userSelection;
 let result;
 
+let userScore = 0;
+let computerScore = 0;
+
+userScoreDisplay = document.querySelector('.userScore');
+userScoreDisplay.textContent = userScore;
+computerScoreDisplay = document.querySelector('.computerScore');
+computerScoreDisplay.textContent = computerScore;
+
 //Buttons and event listeners
 let rock = document.createElement('button');
 rock.textContent = 'Rock';
 rock.addEventListener('click', event => {
     userSelection = event.target.innerText;
     result = playRound(userSelection, getComputerChoice());
+    game(result);
 });
 
 let paper = document.createElement('button');
@@ -17,6 +26,7 @@ paper.textContent = 'Paper';
 paper.addEventListener('click', event => {
     userSelection = event.target.innerText;
     result = playRound(userSelection, getComputerChoice());
+    game(result);
 });
 
 let scissors = document.createElement('button');
@@ -24,6 +34,7 @@ scissors.textContent = 'Scissors';
 scissors.addEventListener('click', event => {   
     userSelection = event.target.innerText;
     result = playRound(userSelection, getComputerChoice());
+    game(result);
 });
 
 //Add buttons to the DOM
@@ -54,21 +65,18 @@ function playRound(userSelection, computerSelection) {
     if ((userSelection === 'Scissors' && computerSelection === 'Rock') || 
         (userSelection === 'Rock' && computerSelection === 'Paper') || 
         (userSelection === 'Paper' && computerSelection === 'Scissors')) {
-            console.log(`YOU LOSE! C: ${computerSelection} | You: ${userSelection}`);
             results.textContent = `You lose! ${computerSelection} beats ${userSelection}`;
             return -1;
         } else if (
             (userSelection === 'Rock' && computerSelection === 'Scissors') || 
             (userSelection === 'Paper' && computerSelection === 'Rock') || 
             (userSelection === 'Scissors' && computerSelection === 'Paper')) {
-            console.log(`YOU WIN! C: ${computerSelection} | You: ${userSelection}`);
             results.textContent = `You win! ${userSelection} beats ${computerSelection}`;
             return 1;
         } else if (
             (userSelection === 'Scissors' && computerSelection === 'Scissors') || 
             (userSelection === 'Rock' && computerSelection === 'Rock') || 
             (userSelection === 'Paper' && computerSelection === 'Paper')) {
-            console.log(`TIE! C: ${computerSelection} | You: ${userSelection}`);
             results.textContent = `Tie!`;
             return 0;
         }
@@ -76,32 +84,31 @@ function playRound(userSelection, computerSelection) {
 }
 
 /* 
-* Function that plays a 5 round game, keeps score, and reports a winner at the end.
-* @params none
+* Function that keeps score and reports a winner.
+* @params {number} number indicating whether the user earned or lost a point
 * @returns {string} string indicating winner of the game
 */
-function game() {
-    let userScore = 0;
-    let computerScore = 0;
+function game(roundResult) {
 
-    // for(let i = 0; i < 5; i++) {
-    //     let computerSelection = getComputerChoice();
-    //     let result = playRound(userSelection, computerSelection);
+    if(userScore < 5 && computerScore < 5) {
+        if(roundResult === 1) {
+            userScore++;
+            userScoreDisplay.textContent = userScore;
+        } else if(roundResult === -1) {
+            computerScore++;
+            computerScoreDisplay.textContent = computerScore;
+        }
 
-    //     if(result === 1) {
-    //         userScore++;
-    //     } else if(result === -1) {
-    //         computerScore++;
-    //     }
-    // }
+        console.log(userScore, computerScore);
+
+    }
     
-    // if(userScore > computerScore) {
-    //     return `You won the game!`;
-    // } else if (userScore < computerScore) {
-    //     return `You lost the game!`;
-    // } else {
-    //     return `No winners, it's a tie!`;
-    // }
-}
+    if(userScore >= 5) {
+        results.textContent = 'You won the game!';
+        results.style.color = 'green';
 
- game();
+    } else if(computerScore >= 5) { 
+        results.textContent = 'You lost the game!';
+        results.style.color = 'red';
+    }
+}
