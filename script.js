@@ -7,9 +7,9 @@ let paper = document.createElement('button');
 let scissors = document.createElement('button');
 
 //Modify buttons
-let rockSelection = rock.textContent = 'Rock';
-let paperSelection = paper.textContent = 'Paper';
-let scissorsSelection = scissors.textContent = 'Scissors';
+rock.textContent = 'Rock';
+paper.textContent = 'Paper';
+scissors.textContent = 'Scissors';
 
 //Add buttons to the DOM
 btnContainer.appendChild(rock);
@@ -20,23 +20,19 @@ let userSelection;
 let result;
 
 //Button click event listeners
-rock.addEventListener('click', () => {
-    userSelection = rockSelection;
+rock.addEventListener('click', event => {
+    userSelection = event.target.innerText;
     result = playRound(userSelection, getComputerChoice());
-    console.log(result);
 });
 
-paper.addEventListener('click', () => {
-    userSelection = paperSelection;
+paper.addEventListener('click', event => {
+    userSelection = event.target.innerText;
     result = playRound(userSelection, getComputerChoice());
-    console.log(result);
 });
 
-scissors.addEventListener('click', () => {   
-    userSelection = scissorsSelection;
+scissors.addEventListener('click', event => {   
+    userSelection = event.target.innerText;
     result = playRound(userSelection, getComputerChoice());
-    console.log(result);
-
 });
 
 /* 
@@ -88,27 +84,28 @@ function playRound(playerSelection, computerSelection) {
 * @params none
 * @returns {string} string indicating winner of the game
 */
-// function game() {
-//     let userScore = 0;
-//     let computerScore = 0;
-//     for(let i = 0; i < 5; i++) {
-//         let computerSelection = getComputerChoice();
-//         let result = playRound(userSelection, computerSelection);
-
-//         if(result === 1) {
-//             userScore++;
-//         } else if(result === -1) {
-//             computerScore++;
-//         }
-//     }
+function game() {
+    let playerScore = 0;
+    let computerScore = 0;
     
-//     if(userScore > computerScore) {
-//         return `You won the game!`;
-//     } else if (userScore < computerScore) {
-//         return `You lost the game!`;
-//     } else {
-//         return `No winners, it's a tie!`;
-//     }
-// }
+    // for(let i = 0; i < 5; i++) {
+    //     let computerSelection = getComputerChoice();
+    //     let result = playRound(userSelection, computerSelection);
 
-//  game();
+    //     if(result === 1) {
+    //         userScore++;
+    //     } else if(result === -1) {
+    //         computerScore++;
+    //     }
+    // }
+    
+    // if(userScore > computerScore) {
+    //     return `You won the game!`;
+    // } else if (userScore < computerScore) {
+    //     return `You lost the game!`;
+    // } else {
+    //     return `No winners, it's a tie!`;
+    // }
+}
+
+ game();
